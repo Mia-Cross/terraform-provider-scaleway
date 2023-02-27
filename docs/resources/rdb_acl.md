@@ -33,7 +33,7 @@ The following arguments are supported:
 
 - `acl_rules` - A list of ACLs (structure is described below)
 
-- `region` - (Defaults to [provider](../index.md#region) `region`) The [region](../guides/regions_and_zones.md#regions) in which the Database Instance should be created.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`) The [region](../guides/regions_and_zones.md#regions) in which the Database Instance should be created.
 
 The `acl_rules` block supports:
 

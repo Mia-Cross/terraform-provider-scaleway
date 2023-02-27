@@ -140,7 +140,7 @@ When executing the test, the following steps are taken for each `TestStep`:
     }
     ```
 
-1. Assertions are run using the provider API.
+2. Assertions are run using the provider API.
    These use the provider API directly rather than asserting against the resource state.
    For example, to verify that the `scaleway_instance_server` described above was created successfully, a test function like this is used:
 
@@ -175,10 +175,10 @@ When executing the test, the following steps are taken for each `TestStep`:
     resource.TestCheckResourceAttr("scaleway_instance_server.foobar", "server_name", testAccScalewayInstanceServerName(rInt)),
     ```
 
-1. The resources created by the test are destroyed.
+3. The resources created by the test are destroyed.
    This step happens automatically, and is the equivalent of calling `terraform destroy`.
 
-1. Assertions are made against the provider API to verify that the resources have indeed been removed.
+4. Assertions are made against the provider API to verify that the resources have indeed been removed.
    If these checks fail, the test fails and reports "dangling resources".
    The code to ensure that the `scaleway_instance_server` shown above has been destroyed looks like this:
 

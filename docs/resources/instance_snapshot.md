@@ -76,9 +76,9 @@ The following arguments are supported:
 - `type` - (Optional) The snapshot's volume type.  The possible values are: `b_ssd` (Block SSD), `l_ssd` (Local SSD) and `unified`.
 Updates to this field will recreate a new resource.
 - `name` - (Optional) The name of the snapshot. If not provided it will be randomly generated.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which
   the snapshot should be created.
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the snapshot is
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the snapshot is
   associated with.
 - `tags` - (Optional) A list of tags to apply to the snapshot.
 - `import` - (Optional) Import a snapshot from a qcow2 file located in a bucket

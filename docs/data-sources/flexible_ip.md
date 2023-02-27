@@ -40,5 +40,5 @@ In addition to all above arguments, the following attributes are exported:
 
 - `reverse` - The reverse domain associated with this IP.
 - `server_id` - The associated server ID if any
-- `organization_id` - (Defaults to [provider](../index.md#organization_id) `organization_id`) The ID of the organization the IP is in.
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the IP is in.
+- `organization_id` - (Defaults to [provider](../index.md#arguments-reference) `organization_id`) The ID of the organization the IP is in.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the IP is in.

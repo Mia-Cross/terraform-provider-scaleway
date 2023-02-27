@@ -141,8 +141,8 @@ The following arguments are supported:
     - `expires_at` - (Optional) The auto expiration date for compatible options
 - `private_network` - (Required) The private networks to attach to the server. For more information, see [the documentation](https://www.scaleway.com/en/docs/compute/elastic-metal/how-to/use-private-networks/)
     - `id` - (Required) The id of the private network to attach.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the server should be created.
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the server is associated with.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the server should be created.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the server is associated with.
 
 
 ## Attributes Reference

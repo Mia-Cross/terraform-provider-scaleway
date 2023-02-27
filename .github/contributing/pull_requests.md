@@ -38,17 +38,17 @@ Here's what to expect:
    You are welcome to submit your pull request for commentary or review before it is fully completed by creating a [draft pull request](https://help.github.com/en/articles/about-pull-requests#draft-pull-requests) or adding `[WIP]` to the beginning of the pull request title.
    Please include specific questions or items you'd like feedback on.
 
-1. Once you believe your pull request is ready to be reviewed, ensure the pull request is not a draft pull request by [marking it ready for review](https://help.github.com/en/articles/changing-the-stage-of-a-pull-request) or removing `[WIP]` from the pull request title if necessary, and a maintainer will review it.
+2. Once you believe your pull request is ready to be reviewed, ensure the pull request is not a draft pull request by [marking it ready for review](https://help.github.com/en/articles/changing-the-stage-of-a-pull-request) or removing `[WIP]` from the pull request title if necessary, and a maintainer will review it.
    Follow [the checklists below](#checklists-for-contribution) to help ensure that your contribution can be easily reviewed and potentially merged.
 
-1. One of Terraform's provider team members will look over your contribution and either approve it or provide comments letting you know if there is anything left to do.
+3. One of Terraform's provider team members will look over your contribution and either approve it or provide comments letting you know if there is anything left to do.
    We do our best to keep up with the volume of PRs waiting for review, but it may take some time depending on the complexity of the work.
 
-1. Once all outstanding comments and checklist items have been addressed, your contribution will be merged!
+4. Once all outstanding comments and checklist items have been addressed, your contribution will be merged!
    Merged PRs will be included in the next Terraform release.
    The provider team takes care of updating the CHANGELOG as they merge.
 
-1. In some cases, we might decide that a PR should be closed without merging.
+5. In some cases, we might decide that a PR should be closed without merging.
    We'll make sure to provide clear reasoning when this happens.
 
 ## Checklists for Contribution

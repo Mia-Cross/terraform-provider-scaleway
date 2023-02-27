@@ -74,7 +74,7 @@ In addition to all arguments above, the following attributes are exported:
 - `sqs_sns_credentials` - The credential used to connect to the SQS/SNS service.
     - `access_key` - The ID of the key.
     - `secret_key` - The Secret value of the key.
-- `region` - (Defaults to [provider](../index.md#region) `region`). The [region](../guides/regions_and_zones.md#regions)
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`). The [region](../guides/regions_and_zones.md#regions)
   in which the namespace should be created.
 
 ## Import

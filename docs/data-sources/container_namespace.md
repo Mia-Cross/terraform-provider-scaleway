@@ -29,8 +29,8 @@ data "scaleway_container_namespace" "by_id" {
 
 - `namespace_id` - (Optional) The namespace id.
   Only one of `name` and `namespace_id` should be specified.
-- `region` - (Defaults to [provider](../index.md#region) `region`) The [region](../guides/regions_and_zones.md#regions) in which the namespace exists.
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the namespace is associated with.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`) The [region](../guides/regions_and_zones.md#regions) in which the namespace exists.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the namespace is associated with.
 
 ## Attributes Reference
 

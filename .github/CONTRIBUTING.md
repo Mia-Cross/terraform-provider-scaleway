@@ -9,7 +9,7 @@ We want people to be able to participate without fear of doing the wrong thing.
 
 | I want to...                  | Pointer                                                                                                                    |
 |-------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| Submit an issue               | [Lifecycle of an issue](contributing/issues.md#lifecycle)                                                                  |
+| Submit an issue               | [Lifecycle of an issue](contributing/issues.md#issues-lifecycle)                                                           |
 | Checklist for issues          | [Checklist for issues](contributing/issues.md#checklist)                                                                   |
 | Contribute code               | [Contributing a pull request](contributing/pull_requests.md)                                                               |
 | Know the review criteria      | [Checklist for pull requests](contributing/pull_requests.md) / [Common Review items](contributing/common_reviews_items.md) |

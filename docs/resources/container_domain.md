@@ -68,7 +68,7 @@ The following arguments are required:
 
 - `container_id` - (Required) The ID of the container.
 
-- `region` - (Defaults to [provider](../index.md#region) `region`) The [region](../guides/regions_and_zones.md#regions) in which the container exists
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`) The [region](../guides/regions_and_zones.md#regions) in which the container exists
 
 ## Attributes Reference
 

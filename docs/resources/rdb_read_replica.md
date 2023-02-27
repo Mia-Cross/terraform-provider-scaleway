@@ -69,7 +69,7 @@ The following arguments are supported:
     - `private_network_id` - (Required) UUID of the private network to be connected to the read replica.
     - `service_ip` - (Required) Endpoint IPv4 address with a CIDR notation. Check documentation about IP and subnet limitations. (IP network).
 
-- `region` - (Defaults to [provider](../index.md#region) `region`) The [region](../guides/regions_and_zones.md#regions) in which the Database read replica should be created.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`) The [region](../guides/regions_and_zones.md#regions) in which the Database read replica should be created.
 
 ## Attributes Reference
 

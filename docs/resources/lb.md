@@ -118,9 +118,9 @@ The following arguments are supported:
 
 - `ssl_compatibility_level` - (Optional) Enforces minimal SSL version (in SSL/TLS offloading context). Please check [possible values](https://developers.scaleway.com/en/products/lb/zoned_api/#ssl-compatibility-level-442f99).
 
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) of the load-balancer.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) of the load-balancer.
 
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the load-balancer is associated with.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the load-balancer is associated with.
 
 ## Attributes Reference
 
@@ -206,7 +206,7 @@ resource scaleway_lb main {
 
 ~> **Important:**  Only one of static_config and dhcp_config may be set.
 
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the private network was created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the private network was created.
 
 
 ## Import

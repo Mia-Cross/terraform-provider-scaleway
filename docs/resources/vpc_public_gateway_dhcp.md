@@ -21,8 +21,8 @@ resource "scaleway_vpc_public_gateway_dhcp" "main" {
 
 The following arguments are supported:
 
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the public gateway DHCP config should be created.
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the public gateway DHCP config is associated with.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the public gateway DHCP config should be created.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the public gateway DHCP config is associated with.
 - `subnet` - (Required) The subnet to associate with the public gateway DHCP config.
 - `address` - (Optional) The IP address of the public gateway DHCP config.
 - `pool_low` - (Optional) Low IP (included) of the dynamic address pool. Defaults to the second address of the subnet.

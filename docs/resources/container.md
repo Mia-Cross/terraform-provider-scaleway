@@ -97,7 +97,7 @@ In addition to all above arguments, the following attributes are exported:
 
 ~> **Important:** Containers' IDs are [regional](../guides/regions_and_zones.md#resource-ids), which means they are of the form `{region}/{id}`, e.g. `fr-par/11111111-1111-1111-1111-111111111111`
 
-- `region` - (Defaults to [provider](../index.md#region) `region`) The [region](../guides/regions_and_zones.md#regions) in which the container was created.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`) The [region](../guides/regions_and_zones.md#regions) in which the container was created.
 - `status` - The container status.
 - `cron_status` - The cron status of the container.
 - `error_message` - The error message of the container.

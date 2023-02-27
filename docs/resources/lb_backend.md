@@ -45,7 +45,7 @@ The following arguments are supported:
 
 - `lb_id`                       - (Required) The load-balancer ID this backend is attached to.
 ~> **Important:** Updates to `lb_id` will recreate the backend.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the load-balancer was created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the load-balancer was created.
 - `forward_protocol`            - (Required) Backend protocol. Possible values are: `tcp` or `http`.
 - `name`                        - (Optional) The name of the load-balancer backend.
 - `forward_port`                - (Required) User sessions will be forwarded to this port of backend servers.

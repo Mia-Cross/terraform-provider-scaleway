@@ -77,7 +77,7 @@ The following arguments are supported:
 
 - `name` - .The name of the iam policy.
 - `description` - The description of the iam policy.
-- `organization_id` - (Defaults to [provider](../index.md#organization_d) `organization_id`) The ID of the organization the policy is associated with.
+- `organization_id` - (Defaults to [provider](../index.md#arguments-reference) `organization_id`) The ID of the organization the policy is associated with.
 - `user_id` - ID of the User the policy will be linked to
 - `group_id` - ID of the Group the policy will be linked to
 - `application_id` - ID of the Application the policy will be linked to

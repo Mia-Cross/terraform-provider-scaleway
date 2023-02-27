@@ -30,7 +30,7 @@ data "scaleway_vpc_public_gateway" "pg_test_by_id" {
 ## Argument Reference
 
 - `name` - (Required) Exact name of the public gateway.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which
   the public gateway should be created.
 
 ## Attributes Reference

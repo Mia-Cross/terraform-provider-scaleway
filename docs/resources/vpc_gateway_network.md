@@ -74,7 +74,7 @@ The following arguments are supported:
 - `enable_dhcp` - (Defaults to true) Enable DHCP config on this network. It requires DHCP id.
 - `cleanup_dhcp` - (Defaults to false) Remove DHCP config on this network on destroy. It requires DHCP id.
 - `static_address` - Enable DHCP config on this network. Only one of `dhcp_id` and `static_address` should be specified.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the gateway network should be created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the gateway network should be created.
 
 ## Attributes Reference
 

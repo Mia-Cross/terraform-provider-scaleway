@@ -42,7 +42,7 @@ data "scaleway_domain_record" "by_id" {
 - `record_id` - (Optional) The record ID.
   Cannot be used with `name`, `type` and `data`.
 
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the domain is associated with.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the domain is associated with.
 
 ## Attributes Reference
 

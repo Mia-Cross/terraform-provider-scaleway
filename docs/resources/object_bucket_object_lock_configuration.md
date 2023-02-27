@@ -55,7 +55,7 @@ The following arguments are supported:
 
         - `years` - (Optional) The number of years that you want to specify for the default retention period.
 
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the bucket is associated with.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the bucket is associated with.
 
 ## Attributes Reference
 

@@ -24,8 +24,8 @@ The following arguments are supported:
 
 - `name` - (Optional) The name of the private network. If not provided it will be randomly generated.
 - `tags` - (Optional) The tags associated with the private network.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the private network should be created.
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the private network is associated with.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the private network should be created.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the private network is associated with.
 
 ## Attributes Reference
 

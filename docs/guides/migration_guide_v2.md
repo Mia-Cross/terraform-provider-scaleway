@@ -93,8 +93,8 @@ By doing so, you can use the same configuration between different tools such as 
 Here is the priority list for credentials sources from top to bottom:
 
 1. Environment variables
-1. Provider settings
-1. [Scaleway configuration files](https://github.com/scaleway/scaleway-sdk-go/blob/master/scw/README.md)
+2. Provider settings
+3. [Scaleway configuration files](https://github.com/scaleway/scaleway-sdk-go/blob/master/scw/README.md)
 
 ## Resources
 

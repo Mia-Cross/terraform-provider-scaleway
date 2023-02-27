@@ -230,9 +230,9 @@ attached to the server. Updates to this field will trigger a stop/start of the s
 
 - `bootscript_id` - The ID of the bootscript to use  (set boot_type to `bootscript`).
 
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the server should be created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the server should be created.
 
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the server is associated with.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the server is associated with.
 
 
 ## Private Network
@@ -242,7 +242,7 @@ attached to the server. Updates to this field will trigger a stop/start of the s
 - `pn_id` - (Required) The private network ID where to connect.
 - `mac_address` The private NIC MAC address.
 - `status` The private NIC state.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the server must be created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the server must be created.
 
 ~> **Important:**
 

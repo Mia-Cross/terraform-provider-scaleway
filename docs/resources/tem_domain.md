@@ -26,9 +26,9 @@ The following arguments are supported:
 - `name` - (Required) The domain name, must not be used in another Transactional Email Domain.
 ~> **Important** Updates to `name` will recreate the domain.
 
-- `region` - (Defaults to [provider](../index.md#region) `region`). The [region](../guides/regions_and_zones.md#regions) in which the domain should be created.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`). The [region](../guides/regions_and_zones.md#regions) in which the domain should be created.
 
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the domain is associated with.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the domain is associated with.
 
 ## Attributes Reference
 

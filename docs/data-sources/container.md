@@ -91,4 +91,4 @@ In addition to all arguments above, the following attributes are exported:
 
 - `error_message` - The error message of the container.
 
-- `region` - (Defaults to [provider](../index.md#region) `region`) The [region](../guides/regions_and_zones.md#regions) in which the container was created.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`) The [region](../guides/regions_and_zones.md#regions) in which the container was created.

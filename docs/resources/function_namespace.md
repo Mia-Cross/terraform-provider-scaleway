@@ -30,9 +30,9 @@ The following arguments are supported:
 
 - `description` (Optional) The description of the namespace.
 
-- `region` - (Defaults to [provider](../index.md#region) `region`). The [region](../guides/regions_and_zones.md#regions) in which the namespace should be created.
+- `region` - (Defaults to [provider](../index.md#arguments-reference) `region`). The [region](../guides/regions_and_zones.md#regions) in which the namespace should be created.
 
-- `project_id` - (Defaults to [provider](../index.md#project_id) `project_id`) The ID of the project the namespace is associated with.
+- `project_id` - (Defaults to [provider](../index.md#arguments-reference) `project_id`) The ID of the project the namespace is associated with.
 
 - `environment_variables` - (Optional) The environment variables of the namespace.
 

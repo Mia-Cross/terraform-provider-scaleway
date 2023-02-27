@@ -141,7 +141,7 @@ The following arguments are supported:
 
 - `inbound_port` - (Required) TCP port to listen on the front side.
 
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the load-balancer was created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the load-balancer was created.
 
 - `name` - (Optional) The name of the load-balancer frontend.
 

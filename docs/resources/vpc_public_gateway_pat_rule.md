@@ -50,7 +50,7 @@ The following arguments are supported:
 - `public_port` - (Required) The Public port to listen on.
 - `private_port` - (Required) The Private port to translate to.
 - `protocol` - (Defaults to both) The Protocol the rule should apply to. Possible values are both, tcp and udp.
-- `zone` - (Defaults to [provider](../index.md#zone) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the public gateway DHCP config should be created.
+- `zone` - (Defaults to [provider](../index.md#arguments-reference) `zone`) The [zone](../guides/regions_and_zones.md#zones) in which the public gateway DHCP config should be created.
 
 ## Attributes Reference
 
