@@ -76,7 +76,7 @@ func TestAccScalewayRdbReadReplica_PrivateNetwork(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "private-network" ]
 					}
 
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -124,7 +124,7 @@ func TestAccScalewayRdbReadReplica_Update(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "update" ]
 					}
 
 					resource "scaleway_rdb_read_replica" "replica" {
@@ -149,7 +149,7 @@ func TestAccScalewayRdbReadReplica_Update(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "update" ]
 					}
 
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -181,7 +181,7 @@ func TestAccScalewayRdbReadReplica_Update(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "update" ]
 					}
 
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -216,7 +216,7 @@ func TestAccScalewayRdbReadReplica_Update(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "update" ]
 					}
 			
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -252,7 +252,7 @@ func TestAccScalewayRdbReadReplica_Update(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "update" ]
 					}
 			
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -288,7 +288,7 @@ func TestAccScalewayRdbReadReplica_Update(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "update" ]
 					}
 			
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -341,7 +341,7 @@ func TestAccScalewayRdbReadReplica_MultipleEndpoints(t *testing.T) {
 						disable_backup = true
 						user_name = "my_initial_user"
 						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_read_replica", "minimal" ]
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "multiple-enpoints" ]
 					}
 
 					resource "scaleway_vpc_private_network" "pn" {}
@@ -482,6 +482,104 @@ func TestAccScalewayRdbReadReplica_DifferentZone(t *testing.T) {
 					resource.TestCheckResourceAttrPair("scaleway_rdb_read_replica.different_zone", "instance_id", "scaleway_rdb_instance.different_zone", "id"),
 					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.different_zone", "same_zone", "false"),
 					testAccCheckScalewayResourceIDChanged("scaleway_rdb_read_replica.different_zone", &readReplicaID),
+				),
+			},
+		},
+	})
+}
+
+func TestAccScalewayRdbReadReplica_WithInstanceAlsoInPrivateNetwork(t *testing.T) {
+	tt := NewTestTools(t)
+	defer tt.Cleanup()
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: tt.ProviderFactories,
+		CheckDestroy: resource.ComposeTestCheckFunc(
+			testAccCheckScalewayRdbInstanceDestroy(tt),
+			testAccCheckScalewayRdbReadReplicaDestroy(tt),
+		),
+		Steps: []resource.TestStep{
+			{
+				Config: `
+					resource "scaleway_vpc_private_network" "pn1" {
+						name = "test-rdb-rr-instance-in-pn1"
+					}
+					resource "scaleway_vpc_private_network" "pn2" {
+						name = "test-rdb-rr-instance-in-pn2"
+					}
+
+					resource scaleway_rdb_instance instance {
+						name = "test-rdb-rr-instance-in-pn"
+						node_type = "db-dev-s"
+						engine = "PostgreSQL-15"
+						is_ha_cluster = false
+						disable_backup = true
+						user_name = "my_initial_user"
+						password = "thiZ_is_v&ry_s3cret"
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "instance-also-in-pn" ]
+						private_network {
+							pn_id = scaleway_vpc_private_network.pn1.id
+							enable_ipam = true
+						}
+					}
+
+					resource "scaleway_rdb_read_replica" "replica" {
+						instance_id = scaleway_rdb_instance.instance.id
+						private_network {
+							private_network_id = scaleway_vpc_private_network.pn1.id
+							enable_ipam = true
+						}
+					}`,
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckRdbReadReplicaExists(tt, "scaleway_rdb_read_replica.replica"),
+					resource.TestCheckResourceAttrPair("scaleway_rdb_read_replica.replica", "instance_id", "scaleway_rdb_instance.instance", "id"),
+					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.replica", "direct_access.#", "0"),
+					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.replica", "private_network.#", "1"),
+					resource.TestCheckResourceAttrPair("scaleway_rdb_read_replica.replica", "private_network.0.private_network_id", "scaleway_vpc_private_network.pn1", "id"),
+					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.replica", "private_network.0.enable_ipam", "true"),
+					resource.TestCheckResourceAttrPair("scaleway_rdb_instance.instance", "private_network.0.pn_id", "scaleway_vpc_private_network.pn1", "id"),
+					resource.TestCheckResourceAttr("scaleway_rdb_instance.instance", "private_network.0.enable_ipam", "true"),
+				),
+			},
+			{
+				Config: `
+					resource "scaleway_vpc_private_network" "pn1" {
+						name = "test-rdb-rr-instance-in-pn1"
+					}
+					resource "scaleway_vpc_private_network" "pn2" {
+						name = "test-rdb-rr-instance-in-pn2"
+					}
+			
+					resource scaleway_rdb_instance instance {
+						name = "test-rdb-rr-instance-in-pn"
+						node_type = "db-dev-s"
+						engine = "PostgreSQL-15"
+						is_ha_cluster = false
+						disable_backup = true
+						user_name = "my_initial_user"
+						password = "thiZ_is_v&ry_s3cret"
+						tags = [ "terraform-test", "scaleway_rdb_read_replica", "instance-also-in-pn" ]
+						private_network {
+							pn_id = scaleway_vpc_private_network.pn2.id
+							enable_ipam = true
+						}
+					}
+			
+					resource "scaleway_rdb_read_replica" "replica" {
+						instance_id = scaleway_rdb_instance.instance.id
+						private_network {
+							private_network_id = scaleway_vpc_private_network.pn2.id
+							enable_ipam = true
+						}
+					}`,
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckRdbReadReplicaExists(tt, "scaleway_rdb_read_replica.replica"),
+					resource.TestCheckResourceAttrPair("scaleway_rdb_read_replica.replica", "instance_id", "scaleway_rdb_instance.instance", "id"),
+					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.replica", "direct_access.#", "0"),
+					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.replica", "private_network.#", "1"),
+					resource.TestCheckResourceAttrPair("scaleway_rdb_read_replica.replica", "private_network.0.private_network_id", "scaleway_vpc_private_network.pn2", "id"),
+					resource.TestCheckResourceAttr("scaleway_rdb_read_replica.replica", "private_network.0.enable_ipam", "true"),
 				),
 			},
 		},
