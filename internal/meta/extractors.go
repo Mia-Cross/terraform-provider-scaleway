@@ -101,7 +101,7 @@ func ExtractHTTPClient(m interface{}) *http.Client {
 	return m.(*Meta).HTTPClient()
 }
 
-func getKeyInRawConfigMap(rawConfig map[string]cty.Value, key string, ty cty.Type) (interface{}, bool) {
+func GetKeyInRawConfigMap(rawConfig map[string]cty.Value, key string, ty cty.Type) (interface{}, bool) {
 	if key == "" {
 		return rawConfig, false
 	}
@@ -114,14 +114,14 @@ func getKeyInRawConfigMap(rawConfig map[string]cty.Value, key string, ty cty.Typ
 		case value.Type().IsListType():
 			// If it's a list and the second element of the key is an index, we look for the value in the list at the given index
 			if index, err := strconv.Atoi(keys[1]); err == nil {
-				return getKeyInRawConfigMap(value.AsValueSlice()[index].AsValueMap(), strings.Join(keys[2:], ""), ty)
+				return GetKeyInRawConfigMap(value.AsValueSlice()[index].AsValueMap(), strings.Join(keys[2:], ""), ty)
 			}
 			// If it's a list and the second element of the key is '#', we look for the value in the list's first element
-			return getKeyInRawConfigMap(value.AsValueSlice()[0].AsValueMap(), strings.Join(keys[2:], ""), ty)
+			return GetKeyInRawConfigMap(value.AsValueSlice()[0].AsValueMap(), strings.Join(keys[2:], ""), ty)
 
 		case value.Type().IsMapType():
 			// If it's a map, we look for the value in the map
-			return getKeyInRawConfigMap(value.AsValueMap(), strings.Join(keys[1:], ""), ty)
+			return GetKeyInRawConfigMap(value.AsValueMap(), strings.Join(keys[1:], ""), ty)
 
 		case value.Type().IsPrimitiveType():
 			// If it's a primitive type (bool, string, number), we convert the value to the expected type given as parameter before returning it
@@ -158,5 +158,5 @@ func GetRawConfigForKey(d *schema.ResourceData, key string, ty cty.Type) (interf
 	if rawConfig.IsNull() {
 		return nil, false
 	}
-	return getKeyInRawConfigMap(rawConfig.AsValueMap(), key, ty)
+	return GetKeyInRawConfigMap(rawConfig.AsValueMap(), key, ty)
 }
