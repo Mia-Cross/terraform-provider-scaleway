@@ -246,13 +246,13 @@ func cassetteSensitiveFieldsAnonymizer(i *cassette.Interaction) error {
 	return nil
 }
 
-// getHTTPRecoder creates a new httpClient that records all HTTP requests in a cassette.
+// GetHTTPRecoder creates a new httpClient that records all HTTP requests in a cassette.
 // This cassette is then replayed whenever tests are executed again. This means that once the
 // requests are recorded in the cassette, no more real HTTP requests must be made to run the tests.
 //
 // It is important to add a `defer cleanup()` so the given cassette files are correctly
 // closed and saved after the requests.
-func getHTTPRecoder(t *testing.T, pkgFolder string, update bool) (client *http.Client, cleanup func(), err error) {
+func GetHTTPRecoder(t *testing.T, pkgFolder string, update bool) (client *http.Client, cleanup func(), err error) {
 	t.Helper()
 	recorderMode := recorder.ModeReplayOnly
 	if update {

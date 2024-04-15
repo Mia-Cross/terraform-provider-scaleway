@@ -220,7 +220,6 @@ func Provider(config *Config) plugin.ProviderFunc {
 				"scaleway_vpc_public_gateway_ip_reverse_dns":   vpcgw.ResourceIPReverseDNS(),
 				"scaleway_vpc_public_gateway_pat_rule":         vpcgw.ResourcePATRule(),
 				"scaleway_webhosting":                          webhosting.ResourceWebhosting(),
-				"scaleway_mock":                                meta.ResourceMock(),
 			},
 
 			DataSourcesMap: map[string]*schema.Resource{

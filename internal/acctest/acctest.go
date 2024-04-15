@@ -34,7 +34,7 @@ func NewTestTools(t *testing.T) *TestTools {
 	}
 
 	// Create a http client with recording capabilities
-	httpClient, cleanup, err := getHTTPRecoder(t, folder, *UpdateCassettes)
+	httpClient, cleanup, err := GetHTTPRecoder(t, folder, *UpdateCassettes)
 	require.NoError(t, err)
 
 	// Create meta that will be passed in the provider config
