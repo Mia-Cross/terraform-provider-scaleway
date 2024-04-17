@@ -130,7 +130,7 @@ func ResourceMock() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"root_string": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"root_int": {
 				Type:     schema.TypeInt,
@@ -139,11 +139,11 @@ func ResourceMock() *schema.Resource {
 			"root_bool": {
 				Type:     schema.TypeBool,
 				Optional: true,
-				Computed: true,
+				//Computed: true,
 			},
 			"list": {
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -151,7 +151,7 @@ func ResourceMock() *schema.Resource {
 			"map": {
 				Type:     schema.TypeMap,
 				Optional: true,
-				Computed: true,
+				//Computed: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -165,11 +165,11 @@ func ResourceMock() *schema.Resource {
 						"nested_string": {
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
+							//Computed: true,
 						},
 						"nested_int": {
 							Type:     schema.TypeInt,
-							Required: true,
+							Optional: true,
 						},
 						"nested_bool": {
 							Type:     schema.TypeBool,
@@ -179,21 +179,21 @@ func ResourceMock() *schema.Resource {
 					},
 				},
 			},
-			"not_in_config_string": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "default string value",
-			},
-			"not_in_config_int": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Default:  -1,
-			},
-			"not_in_config_bool": {
-				Type:     schema.TypeBool,
-				Optional: true,
-				Default:  true,
-			},
+			//"not_in_config_string": {
+			//	Type:     schema.TypeString,
+			//	Optional: true,
+			//	Default:  "default string value",
+			//},
+			//"not_in_config_int": {
+			//	Type:     schema.TypeInt,
+			//	Optional: true,
+			//	Default:  -1,
+			//},
+			//"not_in_config_bool": {
+			//	Type:     schema.TypeBool,
+			//	Optional: true,
+			//	Default:  true,
+			//},
 		},
 	}
 }
