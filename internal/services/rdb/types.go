@@ -1,7 +1,6 @@
 package rdb
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -48,6 +47,9 @@ func expandPrivateNetwork(data interface{}, exist bool, ipamConfig *bool, static
 				IpamConfig:       &rdb.EndpointSpecPrivateNetworkIpamConfig{},
 			},
 		}
+		if ipamConfig != nil && !*ipamConfig {
+			spec.PrivateNetwork.IpamConfig = nil
+		}
 
 		if staticConfig != nil {
 			ip, err := types.ExpandIPNet(*staticConfig)
@@ -59,11 +61,9 @@ func expandPrivateNetwork(data interface{}, exist bool, ipamConfig *bool, static
 			if ipamConfig != nil && *ipamConfig {
 				diags = append(diags, diag.Diagnostic{
 					Severity: diag.Warning,
-					Detail:   "`ip_net` field is set so `enable_ipam` field will be ignored",
+					Detail:   "`ip_net` field is set therefore `enable_ipam` field will be ignored",
 				})
 			}
-		} else if ipamConfig == nil || !*ipamConfig {
-			return nil, diag.FromErr(errors.New("at least one of `ip_net` or `enable_ipam` (set to true) must be set"))
 		}
 		res = append(res, spec)
 	}
@@ -157,6 +157,9 @@ func expandReadReplicaEndpointsSpecPrivateNetwork(data interface{}, ipamConfig *
 			IpamConfig:       &rdb.ReadReplicaEndpointSpecPrivateNetworkIpamConfig{},
 		},
 	}
+	if ipamConfig != nil && !*ipamConfig {
+		endpoint.PrivateNetwork.IpamConfig = nil
+	}
 
 	if staticConfig != nil {
 		ipNet, err := types.ExpandIPNet(*staticConfig)
@@ -168,11 +171,9 @@ func expandReadReplicaEndpointsSpecPrivateNetwork(data interface{}, ipamConfig *
 		if ipamConfig != nil && !*ipamConfig {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Warning,
-				Detail:   "`service_ip` field is set so `enable_ipam` field will be ignored",
+				Detail:   "`service_ip` field is set therefore `enable_ipam` field will be ignored",
 			})
 		}
-	} else if ipamConfig == nil || !*ipamConfig {
-		return nil, diag.FromErr(errors.New("at least one of `service_ip` or `enable_ipam` (set to true) must be set"))
 	}
 
 	return endpoint, diags

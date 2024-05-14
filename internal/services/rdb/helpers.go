@@ -79,23 +79,22 @@ func rdbPrivilegeUpgradeV1SchemaType() cty.Type {
 }
 
 func getIPConfigCreate(d *schema.ResourceData, ipFieldName string) (ipamConfig *bool, staticConfig *string) {
-	enableIpam, enableIpamSet := d.GetOk("private_network.0.enable_ipam")
-	if enableIpamSet {
+	if enableIpam, enableIpamSet := d.GetOk("private_network.0.enable_ipam"); enableIpamSet {
 		ipamConfig = types.ExpandBoolPtr(enableIpam)
 	}
-	customIP, customIPSet := d.GetOk("private_network.0." + ipFieldName)
-	if customIPSet {
+	if customIP, customIPSet := d.GetOk("private_network.0." + ipFieldName); customIPSet {
 		staticConfig = types.ExpandStringPtr(customIP)
 	}
 	return ipamConfig, staticConfig
 }
 
-// getIPConfigUpdate forces the provider to read the user's config instead of checking the state, because "enable_ipam" is not readable from the API
+// getIPConfigUpdate forces the provider to read the user's config instead of checking the state, because changes to
+// computed optional fields can be missed by Terraform
 func getIPConfigUpdate(d *schema.ResourceData, ipFieldName string) (ipamConfig *bool, staticConfig *string) {
-	if ipamConfigI, _ := meta.GetRawConfigForKey(d, "private_network.#.enable_ipam", cty.Bool); ipamConfigI != nil {
+	if ipamConfigI, ipamConfigSet := meta.GetRawConfigForKey(d, "private_network.#.enable_ipam", cty.Bool); ipamConfigSet {
 		ipamConfig = types.ExpandBoolPtr(ipamConfigI)
 	}
-	if staticConfigI, _ := meta.GetRawConfigForKey(d, "private_network.#."+ipFieldName, cty.String); staticConfigI != nil {
+	if staticConfigI, staticConfigSet := meta.GetRawConfigForKey(d, "private_network.#."+ipFieldName, cty.String); staticConfigSet {
 		staticConfig = types.ExpandStringPtr(staticConfigI)
 	}
 	return ipamConfig, staticConfig

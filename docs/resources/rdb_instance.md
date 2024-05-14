@@ -181,7 +181,7 @@ Please consult the [GoDoc](https://pkg.go.dev/github.com/scaleway/scaleway-sdk-g
     - `ip_net` - (Optional) The IP network address within the private subnet. This must be an IPv4 address with a CIDR notation. If not set, The IP network address within the private subnet is determined by the IP Address Management (IPAM) service.
     - `enable_ipam` - (Optional) If true, the IP network address within the private subnet is determined by the IP Address Management (IPAM) service.
 
-~> **Important:** One of `ip_net` or `enable_ipam=true` must be set.
+~> **Important:** If both `ip_net` and `enable_ipam=true` are set, only `ip_net` will be considered
 
 ~> **Important:** Updates to `private_network` will recreate the Instance's endpoint
   

@@ -94,7 +94,7 @@ The following arguments are supported:
     - `service_ip` - (Optional) The IP network address within the private subnet. This must be an IPv4 address with a CIDR notation. If not set, The IP network address within the private subnet is determined by the IP Address Management (IPAM) service.
     - `enable_ipam` - (Optional) If true, the IP network address within the private subnet is determined by the IP Address Management (IPAM) service.
 
-~> **Important:** One of `service_ip` or `enable_ipam=true` must be set.
+~> **Important:** If both `service_ip` and `enable_ipam=true` are set, only `service_ip` will be considered
 
 - `same_zone` - (Defaults to `true`) Defines whether to create the replica in the same availability zone as the main instance nodes or not.
 

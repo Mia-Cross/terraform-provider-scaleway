@@ -568,7 +568,6 @@ func TestAccInstance_PrivateNetworkUpdate(t *testing.T) {
 						volume_size_in_gb = 10
 						private_network {
 							pn_id = "${scaleway_vpc_private_network.pn02.id}"
-							enable_ipam = true
 						}
 					}
 				`, latestEngineVersion),
@@ -680,7 +679,6 @@ func TestAccInstance_PrivateNetworkUpdate(t *testing.T) {
 						volume_size_in_gb = 10`, latestEngineVersion) + `
 						private_network {
 							pn_id  = scaleway_vpc_private_network.pn01.id
-							enable_ipam = true
 						}
 					}`,
 				Check: resource.ComposeTestCheckFunc(

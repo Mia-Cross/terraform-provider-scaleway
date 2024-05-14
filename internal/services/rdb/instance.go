@@ -199,7 +199,7 @@ func ResourceInstance() *schema.Resource {
 							Type:        schema.TypeBool,
 							Optional:    true,
 							Computed:    true,
-							Description: "Whether or not the private network endpoint should be configured with IPAM",
+							Description: "Whether the private network endpoint should be configured with IPAM",
 						},
 						"zone": zonal.Schema(),
 					},
