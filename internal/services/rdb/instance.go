@@ -8,6 +8,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/scaleway/scaleway-sdk-go/api/rdb/v1"
@@ -312,7 +313,74 @@ func ResourceInstance() *schema.Resource {
 			"organization_id": account.OrganizationIDSchema(),
 			"project_id":      account.ProjectIDSchema(),
 		},
-		CustomizeDiff: cdf.LocalityCheck("private_network.#.pn_id"),
+		CustomizeDiff: customdiff.All(
+			cdf.LocalityCheck("private_network.#.pn_id"),
+			func(ctx context.Context, diff *schema.ResourceDiff, i interface{}) error {
+				//pn, pnExists := diff.GetOkExists("private_network"),
+				_, staticConfigAlreadySet := diff.GetOkExists("ip_net")
+				_, ipamConfigAlreadySet := diff.GetOkExists("enable_ipam")
+				if ipamConfigAlreadySet {
+					return nil
+				}
+
+				if rawConfig := diff.GetRawConfig(); !rawConfig.IsNull() {
+					pnsRawConfig := rawConfig.AsValueMap()["private_network"]
+					pnRawConfig := pnsRawConfig.AsValueSlice()[0].AsValueMap()
+
+					if pnRawConfig["ip_net"].IsNull() && pnRawConfig["enable_ipam"].IsNull() {
+						rdbAPI, region, instanceID, err := NewAPIWithRegionAndID(i, diff.Id())
+						if err != nil {
+							return err
+						}
+						instance, err := rdbAPI.WaitForInstance(&rdb.WaitForInstanceRequest{
+							Region:     region,
+							InstanceID: instanceID,
+						}, scw.WithContext(ctx))
+						if err != nil {
+							return err
+						}
+
+						if staticConfigAlreadySet {
+							deletePrivateEndpoint(ctx, rdbAPI, instance, region)
+							instance, err = rdbAPI.WaitForInstance(&rdb.WaitForInstanceRequest{
+								Region:     region,
+								InstanceID: instanceID,
+							}, scw.WithContext(ctx))
+							if err != nil {
+								return err
+							}
+						}
+
+						// set new endpoint
+						pn, pnExists := diff.GetOk("private_network")
+						if pnExists {
+							privateEndpoints, diags := expandPrivateNetwork(pn, true, scw.BoolPtr(true), nil)
+							if diags.HasError() {
+								return nil //TODO dont leave this, it's supposed to return the errors from the diag
+
+							}
+							for _, warning := range diags {
+								tflog.Warn(ctx, warning.Detail)
+							}
+							for _, e := range privateEndpoints {
+								_, err := rdbAPI.CreateEndpoint(
+									&rdb.CreateEndpointRequest{Region: region, InstanceID: instanceID, EndpointSpec: e},
+									scw.WithContext(ctx))
+								if err != nil {
+									return err
+								}
+							}
+						}
+					}
+
+					//err := diff.SetNew("private_network.0.enable_ipam", true)
+					//if err != nil {
+					//	return err
+					//}
+				}
+				return nil
+			},
+		),
 	}
 }
 

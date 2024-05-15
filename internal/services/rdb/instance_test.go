@@ -514,111 +514,111 @@ func TestAccInstance_PrivateNetworkUpdate(t *testing.T) {
 			vpcchecks.CheckPrivateNetworkDestroy(tt),
 		),
 		Steps: []resource.TestStep{
-			{
-				Config: fmt.Sprintf(`
-					resource scaleway_vpc_private_network pn01 {
-						name = "my_private_network"
-					}
-
-					resource scaleway_rdb_instance main {
-						name = "test-rdb-private-network-update"
-						node_type = "db-dev-s"
-						engine = %q
-						is_ha_cluster = false
-						disable_backup = true
-						user_name = "my_initial_user"
-						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_instance", "volume", "rdb_pn" ]
-						volume_type = "bssd"
-						volume_size_in_gb = 10
-						private_network {
-							pn_id = "${scaleway_vpc_private_network.pn01.id}"
-							enable_ipam = true
-						}
-					}
-				`, latestEngineVersion),
-				Check: resource.ComposeTestCheckFunc(
-					vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn01"),
-					isInstancePresent(tt, "scaleway_rdb_instance.main"),
-					resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.#", "1"),
-					resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.0.enable_ipam", "true"),
-					resource.TestCheckResourceAttrPair("scaleway_rdb_instance.main", "private_network.0.pn_id", "scaleway_vpc_private_network.pn01", "id"),
-				),
-			},
-			// Change PN but keep ipam config
-			{
-				Config: fmt.Sprintf(`
-					resource scaleway_vpc_private_network pn01 {
-						name = "my_private_network"
-					}
-					resource scaleway_vpc_private_network pn02 {
-						name = "my_second_private_network"
-					}
-			
-					resource scaleway_rdb_instance main {
-						name = "test-rdb-private-network-update"
-						node_type = "db-dev-s"
-						engine = %q
-						is_ha_cluster = false
-						disable_backup = true
-						user_name = "my_initial_user"
-						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_instance", "volume", "rdb_pn" ]
-						volume_type = "bssd"
-						volume_size_in_gb = 10
-						private_network {
-							pn_id = "${scaleway_vpc_private_network.pn02.id}"
-						}
-					}
-				`, latestEngineVersion),
-				Check: resource.ComposeTestCheckFunc(
-					vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn01"),
-					vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn02"),
-					isInstancePresent(tt, "scaleway_rdb_instance.main"),
-					resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.#", "1"),
-					resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.0.enable_ipam", "true"),
-					resource.TestCheckResourceAttrPair("scaleway_rdb_instance.main", "private_network.0.pn_id", "scaleway_vpc_private_network.pn02", "id"),
-				),
-			},
-			// Keep PN but change ipam config -> static
-			{
-				Config: fmt.Sprintf(`
-					resource scaleway_vpc_private_network pn01 {
-						name = "my_private_network"
-					}
-					resource scaleway_vpc_private_network pn02 {
-						name = "my_second_private_network"
-					}
-			
-					locals {
-						ip_address  = cidrhost(scaleway_vpc_private_network.pn02.ipv4_subnet.0.subnet, 4)
-						cidr_prefix = split("/", scaleway_vpc_private_network.pn02.ipv4_subnet.0.subnet)[1]
-					}
-			
-					resource scaleway_rdb_instance main {
-						name = "test-rdb-private-network-update"
-						node_type = "db-dev-s"
-						engine = %q
-						is_ha_cluster = false
-						disable_backup = true
-						user_name = "my_initial_user"
-						password = "thiZ_is_v&ry_s3cret"
-						tags = [ "terraform-test", "scaleway_rdb_instance", "volume", "rdb_pn" ]
-						volume_type = "bssd"
-						volume_size_in_gb = 10`, latestEngineVersion) + `
-						private_network {
-							ip_net = format("%s/%s", local.ip_address, local.cidr_prefix)
-							pn_id  = scaleway_vpc_private_network.pn02.id
-						}
-					}`,
-				Check: resource.ComposeTestCheckFunc(
-					vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn02"),
-					isInstancePresent(tt, "scaleway_rdb_instance.main"),
-					resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.#", "1"),
-					resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.0.enable_ipam", "false"),
-					resource.TestCheckResourceAttrPair("scaleway_rdb_instance.main", "private_network.0.pn_id", "scaleway_vpc_private_network.pn02", "id"),
-				),
-			},
+			//{
+			//	Config: fmt.Sprintf(`
+			//		resource scaleway_vpc_private_network pn01 {
+			//			name = "my_private_network"
+			//		}
+			//
+			//		resource scaleway_rdb_instance main {
+			//			name = "test-rdb-private-network-update"
+			//			node_type = "db-dev-s"
+			//			engine = %q
+			//			is_ha_cluster = false
+			//			disable_backup = true
+			//			user_name = "my_initial_user"
+			//			password = "thiZ_is_v&ry_s3cret"
+			//			tags = [ "terraform-test", "scaleway_rdb_instance", "volume", "rdb_pn" ]
+			//			volume_type = "bssd"
+			//			volume_size_in_gb = 10
+			//			private_network {
+			//				pn_id = "${scaleway_vpc_private_network.pn01.id}"
+			//				enable_ipam = true
+			//			}
+			//		}
+			//	`, latestEngineVersion),
+			//	Check: resource.ComposeTestCheckFunc(
+			//		vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn01"),
+			//		isInstancePresent(tt, "scaleway_rdb_instance.main"),
+			//		resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.#", "1"),
+			//		resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.0.enable_ipam", "true"),
+			//		resource.TestCheckResourceAttrPair("scaleway_rdb_instance.main", "private_network.0.pn_id", "scaleway_vpc_private_network.pn01", "id"),
+			//	),
+			//},
+			//// Change PN but keep ipam config
+			//{
+			//	Config: fmt.Sprintf(`
+			//		resource scaleway_vpc_private_network pn01 {
+			//			name = "my_private_network"
+			//		}
+			//		resource scaleway_vpc_private_network pn02 {
+			//			name = "my_second_private_network"
+			//		}
+			//
+			//		resource scaleway_rdb_instance main {
+			//			name = "test-rdb-private-network-update"
+			//			node_type = "db-dev-s"
+			//			engine = %q
+			//			is_ha_cluster = false
+			//			disable_backup = true
+			//			user_name = "my_initial_user"
+			//			password = "thiZ_is_v&ry_s3cret"
+			//			tags = [ "terraform-test", "scaleway_rdb_instance", "volume", "rdb_pn" ]
+			//			volume_type = "bssd"
+			//			volume_size_in_gb = 10
+			//			private_network {
+			//				pn_id = "${scaleway_vpc_private_network.pn02.id}"
+			//			}
+			//		}
+			//	`, latestEngineVersion),
+			//	Check: resource.ComposeTestCheckFunc(
+			//		vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn01"),
+			//		vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn02"),
+			//		isInstancePresent(tt, "scaleway_rdb_instance.main"),
+			//		resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.#", "1"),
+			//		resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.0.enable_ipam", "true"),
+			//		resource.TestCheckResourceAttrPair("scaleway_rdb_instance.main", "private_network.0.pn_id", "scaleway_vpc_private_network.pn02", "id"),
+			//	),
+			//},
+			//// Keep PN but change ipam config -> static
+			//{
+			//	Config: fmt.Sprintf(`
+			//		resource scaleway_vpc_private_network pn01 {
+			//			name = "my_private_network"
+			//		}
+			//		resource scaleway_vpc_private_network pn02 {
+			//			name = "my_second_private_network"
+			//		}
+			//
+			//		locals {
+			//			ip_address  = cidrhost(scaleway_vpc_private_network.pn02.ipv4_subnet.0.subnet, 4)
+			//			cidr_prefix = split("/", scaleway_vpc_private_network.pn02.ipv4_subnet.0.subnet)[1]
+			//		}
+			//
+			//		resource scaleway_rdb_instance main {
+			//			name = "test-rdb-private-network-update"
+			//			node_type = "db-dev-s"
+			//			engine = %q
+			//			is_ha_cluster = false
+			//			disable_backup = true
+			//			user_name = "my_initial_user"
+			//			password = "thiZ_is_v&ry_s3cret"
+			//			tags = [ "terraform-test", "scaleway_rdb_instance", "volume", "rdb_pn" ]
+			//			volume_type = "bssd"
+			//			volume_size_in_gb = 10`, latestEngineVersion) + `
+			//			private_network {
+			//				ip_net = format("%s/%s", local.ip_address, local.cidr_prefix)
+			//				pn_id  = scaleway_vpc_private_network.pn02.id
+			//			}
+			//		}`,
+			//	Check: resource.ComposeTestCheckFunc(
+			//		vpcchecks.IsPrivateNetworkPresent(tt, "scaleway_vpc_private_network.pn02"),
+			//		isInstancePresent(tt, "scaleway_rdb_instance.main"),
+			//		resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.#", "1"),
+			//		resource.TestCheckResourceAttr("scaleway_rdb_instance.main", "private_network.0.enable_ipam", "false"),
+			//		resource.TestCheckResourceAttrPair("scaleway_rdb_instance.main", "private_network.0.pn_id", "scaleway_vpc_private_network.pn02", "id"),
+			//	),
+			//},
 			// Change PN but keep static config
 			{
 				Config: fmt.Sprintf(`

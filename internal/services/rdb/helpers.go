@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-cty/cty"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/scaleway/scaleway-sdk-go/api/rdb/v1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
@@ -98,4 +99,20 @@ func getIPConfigUpdate(d *schema.ResourceData, ipFieldName string) (ipamConfig *
 		staticConfig = types.ExpandStringPtr(staticConfigI)
 	}
 	return ipamConfig, staticConfig
+}
+
+func deletePrivateEndpoint(ctx context.Context, rdbAPI *rdb.API, instance *rdb.Instance, region scw.Region) {
+	for _, e := range instance.Endpoints {
+		if e.PrivateNetwork != nil {
+			err := rdbAPI.DeleteEndpoint(
+				&rdb.DeleteEndpointRequest{
+					EndpointID: e.ID,
+					Region:     region,
+				},
+				scw.WithContext(ctx))
+			if err != nil {
+				diag.FromErr(err)
+			}
+		}
+	}
 }
