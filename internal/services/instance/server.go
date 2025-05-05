@@ -5,6 +5,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	ipamAPI "github.com/scaleway/scaleway-sdk-go/api/ipam/v1"
+	"github.com/scaleway/terraform-provider-scaleway/v2/internal/services/ipam"
 	"io"
 	"log"
 	"strconv"
@@ -346,6 +348,25 @@ func ResourceServer() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 							Description: "IP Address",
+						},
+					},
+				},
+			},
+			"private_ips": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Description: "List of private IPv4 addresses associated with the resource",
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": {
+							Type:        schema.TypeString,
+							Computed:    true,
+							Description: "The ID of the IPv4 address resource",
+						},
+						"address": {
+							Type:        schema.TypeString,
+							Computed:    true,
+							Description: "The private IPv4 address",
 						},
 					},
 				},
@@ -772,6 +793,32 @@ func ResourceInstanceServerRead(ctx context.Context, d *schema.ResourceData, m i
 	if err != nil {
 		return diag.FromErr(err)
 	}
+
+	var privateNICIDs []string
+	for _, nic := range ph.privateNICsMap {
+		privateNICIDs = append(privateNICIDs, nic.ID)
+	}
+
+	var allPrivateIPs []map[string]interface{}
+	resourceType := ipamAPI.ResourceTypeInstancePrivateNic
+	region, err := zone.Region()
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	for _, nicID := range privateNICIDs {
+		opts := &ipam.GetResourcePrivateIPsOptions{
+			ResourceType: &resourceType,
+			ResourceID:   &nicID,
+		}
+		privateIPs, err := ipam.GetResourcePrivateIPs(ctx, m, region, opts)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+		if privateIPs != nil {
+			allPrivateIPs = append(allPrivateIPs, privateIPs...)
+		}
+	}
+	_ = d.Set("private_ips", allPrivateIPs)
 
 	////
 	// Display warning if server will soon reach End of Service
