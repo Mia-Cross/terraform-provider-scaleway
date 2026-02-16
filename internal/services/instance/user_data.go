@@ -123,11 +123,6 @@ func setUserDataState(d *schema.ResourceData, serverUserDataRawValue io.Reader, 
 	_ = d.Set("value", string(userDataValue))
 	_ = d.Set("zone", zone.String())
 
-	err = identity.SetZonalIdentity(d, zone, fmt.Sprintf("%s/%s", key, serverID))
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
 	return nil
 }
 
@@ -161,6 +156,11 @@ func ResourceInstanceUserDataRead(ctx context.Context, d *schema.ResourceData, m
 			return nil
 		}
 
+		return diag.FromErr(err)
+	}
+
+	err = identity.SetZonalIdentity(d, zone, fmt.Sprintf("%s/%s", key, server.ID))
+	if err != nil {
 		return diag.FromErr(err)
 	}
 
