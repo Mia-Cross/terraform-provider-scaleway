@@ -85,6 +85,12 @@ func TestAccSecurityGroup_Basic(t *testing.T) {
 				),
 			},
 			{
+				ResourceName:      "scaleway_instance_security_group.base",
+				ImportState:       true,
+				ImportStateVerify: true,
+				//ImportStateVerifyIgnore: []string{"delete_additional_resources"},
+			},
+			{
 				Config: `
 					resource "scaleway_instance_security_group" "base" {
 						name = "sg-name"
@@ -156,6 +162,12 @@ func TestAccSecurityGroup_Basic(t *testing.T) {
 				),
 			},
 			{
+				ResourceName:      "scaleway_instance_security_group.base",
+				ImportState:       true,
+				ImportStateVerify: true,
+				//ImportStateVerifyIgnore: []string{"delete_additional_resources"},
+			},
+			{
 				Config: `
 					resource "scaleway_instance_security_group" "base" {
 						name = "sg-name"
@@ -166,6 +178,12 @@ func TestAccSecurityGroup_Basic(t *testing.T) {
 					resource.TestCheckResourceAttr("scaleway_instance_security_group.base", "tags.#", "0"),
 					resource.TestCheckResourceAttr("scaleway_instance_security_group.base", "inbound_rule.#", "0"),
 				),
+			},
+			{
+				ResourceName:      "scaleway_instance_security_group.base",
+				ImportState:       true,
+				ImportStateVerify: true,
+				//ImportStateVerifyIgnore: []string{"delete_additional_resources"},
 			},
 		},
 	})
