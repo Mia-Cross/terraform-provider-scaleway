@@ -46,6 +46,11 @@ func securityGroupRulesSchema() map[string]*schema.Schema {
 			Description: "Outbound rules for this set of security group rules",
 			Elem:        securityGroupRuleSchema(),
 		},
+		"zone": {
+			Type:        schema.TypeString,
+			Description: "The zone of the security group rules",
+			Computed:    true,
+		},
 	}
 }
 
@@ -65,6 +70,7 @@ func ResourceInstanceSecurityGroupRulesRead(ctx context.Context, d *schema.Resou
 	}
 
 	_ = d.Set("security_group_id", securityGroupZonedID)
+	_ = d.Set("zone", zone)
 
 	inboundRules, outboundRules, err := getSecurityGroupRules(ctx, instanceAPI, zone, securityGroupID, d)
 	if err != nil {
