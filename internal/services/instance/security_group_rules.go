@@ -54,6 +54,11 @@ func securityGroupRulesSchema() map[string]*schema.Schema {
 			Description: "Outbound rules for this set of security group rules",
 			Elem:        securityGroupRuleSchema(),
 		},
+		"zone": {
+			Type:        schema.TypeString,
+			Description: "The zone of the security group rules",
+			Computed:    true,
+		},
 	}
 }
 
@@ -74,6 +79,7 @@ func ResourceInstanceSecurityGroupRulesCreate(ctx context.Context, d *schema.Res
 
 func setSecurityGroupRulesState(ctx context.Context, d *schema.ResourceData, instanceAPI *instance.API, sg *instance.SecurityGroup) diag.Diagnostics {
 	_ = d.Set("security_group_id", zonal.NewID(sg.Zone, sg.ID).String())
+	_ = d.Set("zone", sg.Zone.String())
 
 	inboundRules, outboundRules, err := getSecurityGroupRules(ctx, instanceAPI, sg.Zone, sg.ID, d)
 	if err != nil {
